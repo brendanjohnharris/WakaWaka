@@ -1,9 +1,10 @@
 import Axios from 'axios'
 import * as wakatimeApis from '../constants/wakatimeApis'
-import { WAKATIME_API_KEY ***REMOVED*** from '../../../key.config'
 
 class WakaTimeService {
-  constructor() {***REMOVED***
+  constructor(apiKey) {
+    this.apiKey = apiKey
+  ***REMOVED***
 
   fetchSummaries(date) {
     const self = this
@@ -11,7 +12,7 @@ class WakaTimeService {
       params: {
         start: date,
         end: date,
-        api_key: WAKATIME_API_KEY //  eslint-disable-line
+        api_key: self.apiKey //  eslint-disable-line
       ***REMOVED***
     ***REMOVED***).then(response => response.data)
   ***REMOVED***
