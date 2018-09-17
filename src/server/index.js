@@ -16,8 +16,13 @@ const syncWakaTimeToGist = function(gistId) {
     .then(response => {
       return githubInstance.updateGist(gistId, date, response)
     ***REMOVED***)
-    .then(response => console.log(`${date***REMOVED***: summary data sync successed!`))
-    .catch(error => console.log(`${date***REMOVED***: oops.. sync erorr. reason: ${error.data***REMOVED***`))
+    .then(response => console.log(`${date***REMOVED***: 数据更新成功！`))
+    .catch(error => {
+      if (error.response) {
+        const { data ***REMOVED*** = error.response
+        console.log(`${date***REMOVED***: 糟糕....请求出了点小差错。错误原因：${JSON.stringify(data)***REMOVED***`)
+      ***REMOVED***
+    ***REMOVED***)
 ***REMOVED***
 
 // 每次重跑 job 手动执行一次同步
