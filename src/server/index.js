@@ -2,10 +2,14 @@ import moment from 'moment'
 const schedule = require('node-schedule')
 import GithubService from './service/GithubService'
 import WakatimeService from './service/WakatimeService'
-let config = require('../config.json')
+import ServerPushService from './service/ServerPushService'
+const config = require('../config.json')
+
 const wakatimeInstance = new WakatimeService(config.wakatimeApiKey)
 const githubInstance = new GithubService(config.gistToken)
+const serverPushInstance = new ServerPushService(config.SCUKey)
 
+const title = ''
 const syncWakaTimeToGist = function(gistId) {
   const date = moment()
     .subtract(1, 'days')
@@ -15,11 +19,18 @@ const syncWakaTimeToGist = function(gistId) {
     .then(response => {
       return githubInstance.updateGist(gistId, date, response)
     ***REMOVED***)
-    .then(response => console.log(`${date***REMOVED***: 数据更新成功！`))
+    .then(response => {
+      console.log(`${date***REMOVED***的数据同步成功！`)
+      serverPushInstance.sendMessageToWechat(`Wakatime-${date***REMOVED***的数据同步成功啦`)
+    ***REMOVED***)
     .catch(error => {
       if (error.response) {
         const { data ***REMOVED*** = error.response
         console.log(`${date***REMOVED***: 糟糕....请求出了点小差错。错误原因：${JSON.stringify(data)***REMOVED***`)
+        serverPushInstance.sendMessageToWechat(
+          `【Wakatime Sync】${date***REMOVED***的数据同步失败`,
+          `错误原因：${JSON.stringify(data)***REMOVED***`
+      ***REMOVED***
       ***REMOVED***
     ***REMOVED***)
 ***REMOVED***
@@ -28,6 +39,6 @@ const syncWakaTimeToGist = function(gistId) {
 syncWakaTimeToGist(config.syncGistId)
 
 // 每天1点30分30秒执行该job
-const job = schedule.scheduleJob('30 30 1 * * *', function() {
-  syncWakaTimeToGist(config.syncGistId)
-***REMOVED***)
+// const job = schedule.scheduleJob('30 30 1 * * *', function() {
+//   syncWakaTimeToGist(config.syncGistId)
+// ***REMOVED***)
