@@ -14,7 +14,7 @@ class ServerPushService {
    */
   sendMessageToWechat(text: string, desp?: string) {
     if (typeof this.key !== 'undefined') {
-      Axios.get(apis.push, {
+      Axios.get(`${apis.push***REMOVED***.${this.key***REMOVED***.send`, {
         params: {
           text,
           desp
