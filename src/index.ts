@@ -3,7 +3,31 @@ const schedule = require('node-schedule')
 import GithubService from './service/GithubService'
 import WakatimeService from './service/WakatimeService'
 import ServerPushService from './service/ServerPushService'
-const config = require('../config.json')
+
+interface ConfigType {
+  wakatimeApiKey: string
+  gistToken: string
+  SCUKey: string
+  syncGistId: string
+***REMOVED***
+let config: ConfigType = {
+  wakatimeApiKey: '',
+  gistToken: '',
+  SCUKey: '',
+  syncGistId: ''
+***REMOVED***
+
+if (process.env.DOCKER_ENV === 'docker') {
+  const { API_KEY, GIST_TOKEN, SCUKey, GIST_ID ***REMOVED*** = process.env
+  config = {
+    wakatimeApiKey: API_KEY,
+    gistToken: GIST_TOKEN,
+    SCUKey,
+    syncGistId: GIST_ID
+  ***REMOVED***
+***REMOVED*** else {
+  config = require('../config.json')
+***REMOVED***
 
 const wakatimeInstance = new WakatimeService(config.wakatimeApiKey)
 const githubInstance = new GithubService(config.gistToken)
