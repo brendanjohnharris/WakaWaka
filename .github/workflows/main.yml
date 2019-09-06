@@ -12,7 +12,7 @@ jobs:
     
     steps:
     - uses: actions/docker/login@master
-    with:
+    env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME ***REMOVED******REMOVED***
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD ***REMOVED******REMOVED***
     - name: Run a one-line script
