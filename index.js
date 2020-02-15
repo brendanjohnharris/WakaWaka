@@ -22,6 +22,7 @@ const octokit = new Octokit({
     const mySummary = await getMySummary(yesterday)
     await updateGist(yesterday, mySummary.data)
     await sendMessageToWechat(`[${yesterday***REMOVED***]wakatime data update successfully!`)
+    console.log(`[${yesterday***REMOVED***]wakatime data update successfully!`)
   ***REMOVED*** catch (error) {
     console.error(`Unable to fetch wakatime summary\n ${error***REMOVED*** `)
     await sendMessageToWechat(`[${yesterday***REMOVED***]failed to update wakatime data!`)
