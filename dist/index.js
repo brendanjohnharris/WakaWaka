@@ -798,9 +798,28 @@ module.exports = (function(e, t) {
     const { WAKATIME_API_KEY: u, GH_TOKEN: p, GIST_ID: c, SCU_KEY: d ***REMOVED*** = process.env
     const l = 'https://wakatime.com/api/v1'
     const m = `${l***REMOVED***/users/current/summaries`
-    const g = `https://sc.ftqq.com/`
+    const g = `https://sc.ftqq.com`
     const h = new n(u)
     const y = new o({ auth: `token ${p***REMOVED***` ***REMOVED***)
+    function getItemContent(e, t) {
+      let r = `#### ${e***REMOVED*** \n`
+      t.forEach(e => {
+        r += `* ${e.name***REMOVED***: ${e.text***REMOVED*** \n`
+      ***REMOVED***)
+      return r
+    ***REMOVED***
+    function getMessageContent(e, t) {
+      if (t.length > 0) {
+        const { projects: e, grand_total: r, languages: n, categories: i, editors: s ***REMOVED*** = t[0]
+        return `## Wakatime Daily Report\nTotal: ${r.text***REMOVED***\n${getItemContent(
+          'Projects',
+          e
+      ***REMOVED******REMOVED***\n${getItemContent('Languages', n)***REMOVED***\n${getItemContent('Editors', s)***REMOVED***\n${getItemContent(
+          'Categories',
+          i
+      ***REMOVED******REMOVED***\n`
+      ***REMOVED***
+    ***REMOVED***
     ***REMOVED***
       const e = s()
         .subtract(1, 'day')
@@ -808,8 +827,8 @@ module.exports = (function(e, t) {
     ***REMOVED***
         const t = await getMySummary(e)
         await updateGist(e, t.data)
-        await sendMessageToWechat(`[${e***REMOVED***]wakatime data update successfully!`)
-        console.log(`[${e***REMOVED***]wakatime data update successfully!`)
+        await sendMessageToWechat(`${e***REMOVED*** update successfully!`, getMessageContent(e, t.data))
+        console.log(`${e***REMOVED*** update successfully!`, getMessageContent(e, t.data))
       ***REMOVED*** catch (t) {
         console.error(`Unable to fetch wakatime summary\n ${t***REMOVED*** `)
         await sendMessageToWechat(`[${e***REMOVED***]failed to update wakatime data!`)
@@ -831,7 +850,7 @@ module.exports = (function(e, t) {
     ***REMOVED***
     async function sendMessageToWechat(e, t) {
       if (typeof d !== 'undefined') {
-        return a.get(`${g***REMOVED***${d***REMOVED***.send`, { params: { text: e, desp: t ***REMOVED*** ***REMOVED***).then(e => e.data)
+        return a.get(`${g***REMOVED***/${d***REMOVED***.send`, { params: { text: e, desp: t ***REMOVED*** ***REMOVED***).then(e => e.data)
       ***REMOVED***
     ***REMOVED***
     ***REMOVED***

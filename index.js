@@ -7,13 +7,34 @@ const Axios = require('axios')
 const { WAKATIME_API_KEY, GH_TOKEN, GIST_ID, SCU_KEY ***REMOVED*** = process.env
 const BASE_URL = 'https://wakatime.com/api/v1'
 const summariesApi = `${BASE_URL***REMOVED***/users/current/summaries`
-const scuPushApi = `https://sc.ftqq.com/`
+const scuPushApi = `https://sc.ftqq.com`
 
 const wakatime = new WakaTimeClient(WAKATIME_API_KEY)
 const octokit = new Octokit({
   auth: `token ${GH_TOKEN***REMOVED***`
 ***REMOVED***)
 
+function getItemContent(title, content) {
+  let itemContent = `#### ${title***REMOVED*** \n`
+  content.forEach(item => {
+    itemContent += `* ${item.name***REMOVED***: ${item.text***REMOVED*** \n`
+  ***REMOVED***)
+  return itemContent
+***REMOVED***
+
+function getMessageContent(date, summary) {
+  if (summary.length > 0) {
+    const { projects, grand_total, languages, categories, editors ***REMOVED*** = summary[0]
+
+    return `## Wakatime Daily Report\nTotal: ${grand_total.text***REMOVED***\n${getItemContent(
+      'Projects',
+      projects
+  ***REMOVED******REMOVED***\n${getItemContent('Languages', languages)***REMOVED***\n${getItemContent(
+      'Editors',
+      editors
+  ***REMOVED******REMOVED***\n${getItemContent('Categories', categories)***REMOVED***\n`
+  ***REMOVED***
+***REMOVED***
 ***REMOVED***
   const yesterday = dayjs()
     .subtract(1, 'day')
@@ -21,8 +42,11 @@ const octokit = new Octokit({
 ***REMOVED***
     const mySummary = await getMySummary(yesterday)
     await updateGist(yesterday, mySummary.data)
-    await sendMessageToWechat(`[${yesterday***REMOVED***]wakatime data update successfully!`)
-    console.log(`[${yesterday***REMOVED***]wakatime data update successfully!`)
+    await sendMessageToWechat(
+      `${yesterday***REMOVED*** update successfully!`,
+      getMessageContent(yesterday, mySummary.data)
+  ***REMOVED***
+    console.log(`${yesterday***REMOVED*** update successfully!`, getMessageContent(yesterday, mySummary.data))
   ***REMOVED*** catch (error) {
     console.error(`Unable to fetch wakatime summary\n ${error***REMOVED*** `)
     await sendMessageToWechat(`[${yesterday***REMOVED***]failed to update wakatime data!`)
@@ -67,7 +91,7 @@ async function updateGist(date, content) {
  */
 async function sendMessageToWechat(text, desp) {
   if (typeof SCU_KEY !== 'undefined') {
-    return Axios.get(`${scuPushApi***REMOVED***${SCU_KEY***REMOVED***.send`, {
+    return Axios.get(`${scuPushApi***REMOVED***/${SCU_KEY***REMOVED***.send`, {
       params: {
         text,
         desp
