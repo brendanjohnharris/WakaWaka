@@ -13,3 +13,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN ***REMOVED******REMOVED***
           GIST_ID: ${{ secrets.GIST_ID***REMOVED******REMOVED***
           WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY ***REMOVED******REMOVED***
+          SCU_KEY: ${{ secrets.SCU_KEY ***REMOVED******REMOVED***
