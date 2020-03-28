@@ -35,23 +35,6 @@ function getMessageContent(date, summary) {
   ***REMOVED******REMOVED***\n${getItemContent('Categories', categories)***REMOVED***\n`
   ***REMOVED***
 ***REMOVED***
-***REMOVED***
-  const yesterday = dayjs()
-    .subtract(1, 'day')
-    .format('YYYY-MM-DD')
-***REMOVED***
-    const mySummary = await getMySummary(yesterday)
-    await updateGist(yesterday, mySummary.data)
-    await sendMessageToWechat(
-      `${yesterday***REMOVED*** update successfully!`,
-      getMessageContent(yesterday, mySummary.data)
-  ***REMOVED***
-    console.log(`${yesterday***REMOVED*** update successfully!`, getMessageContent(yesterday, mySummary.data))
-  ***REMOVED*** catch (error) {
-    console.error(`Unable to fetch wakatime summary\n ${error***REMOVED*** `)
-    await sendMessageToWechat(`[${yesterday***REMOVED***]failed to update wakatime data!`)
-  ***REMOVED***
-***REMOVED***
 
 function getMySummary(date) {
   return Axios.get(summariesApi, {
@@ -98,6 +81,31 @@ async function sendMessageToWechat(text, desp) {
       ***REMOVED***
     ***REMOVED***).then(response => response.data)
   ***REMOVED***
+***REMOVED***
+
+const fetchSummaryWithRetry = async times => {
+  const yesterday = dayjs()
+    .subtract(1, 'day')
+    .format('YYYY-MM-DD')
+***REMOVED***
+    const mySummary = await getMySummary(yesterday)
+    await updateGist(yesterday, mySummary.data)
+    await sendMessageToWechat(
+      `${yesterday***REMOVED*** update successfully!`,
+      getMessageContent(yesterday, mySummary.data)
+  ***REMOVED***
+  ***REMOVED*** catch (error) {
+    if (times === 1) {
+      console.error(`Unable to fetch wakatime summary\n ${error***REMOVED*** `)
+      return await sendMessageToWechat(`[${yesterday***REMOVED***]failed to update wakatime data!`)
+    ***REMOVED***
+    console.log(`retry fetch summary data: ${times - 1***REMOVED*** time`)
+    fetchSummaryWithRetry(times - 1)
+  ***REMOVED***
+***REMOVED***
+
+***REMOVED***
+  fetchSummaryWithRetry(3)
 ***REMOVED***
 
 ***REMOVED***
