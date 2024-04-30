@@ -1,5 +1,8 @@
 name: Update gist with WakaTime summary
 on:
+  push:
+    branches:
+      - master
   workflow_dispatch:
   schedule:
     - cron: '0 20 * * *'
