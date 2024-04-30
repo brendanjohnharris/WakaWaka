@@ -1,8 +1,0 @@
-name: 'wakatime-sync'
-description: 'Generate wakatime charts and save to the charts branch'
-branding:
-  icon: 'clipboard'
-  color: 'blue'
-runs:
-  using: 'node21'
-  main: 'charts/index.js'
