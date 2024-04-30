@@ -1,8 +1,0 @@
-name: 'wakatime-sync'
-description: 'Back up your wakatime sync to your gist'
-branding:
-  icon: 'clipboard'
-  color: 'blue'
-runs:
-  using: 'node12'
-  main: 'dist/index.js'
