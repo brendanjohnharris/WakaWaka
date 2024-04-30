@@ -1,51 +1,75 @@
-const data = {
-    labels: [1, 2, 3],
-    datasets: [
-        {
-            label: 'D2',
-            data: [1, 1, 3]
-        },
-        {
-            label: 'D3',
-            data: [1, 1, 3]
-        },
-        {
-            label: 'D4',
-            data: [1, 1, 3]
-        }
-    ]
-}
-
-const config = {
-    type: 'line',
-    data: data,
-    options: {
-        scales: {
-            y: {
-                stacked: true
-            }
-        },
-        plugins: {
-            filler: {
-                propagate: false
-            },
-            'samples-filler-analyser': {
-                target: 'chart-analyser'
-            }
-        },
-        interaction: {
-            intersect: false
-        },
-        elements: {
-            line: {
-                // tension: 0.4,
-                fill: 'stack'
-            }
-        }
-    }
-}
 
 let smooth = false
 let propagate = false
 
-new Chart(document.getElementById('waka'), config)
+async function main() {
+
+    dates = await dateRange(default_start_date, default_end_date)
+    data = await formatDaysData(dates)
+    plotdata = await formatPlotData(data)
+
+
+
+    const config = {
+        type: 'line',
+        data: plotdata,
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        parser: 'yyyy-MM-dd',
+                        unit: 'day',
+                        minUnit: 'day',
+                        displayFormats: {
+                            day: 'E dd/MM/yyyy'
+                        }
+                    }
+                },
+                y: {
+                    ticks: {
+                        callback: formatSeconds
+                    },
+                    stacked: true
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            let label = context.dataset.label || '';
+
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += formatSeconds(context.parsed.y, 0);
+                            }
+                            return label;
+                        }
+                    }
+                },
+                filler: {
+                    propagate: false
+                },
+                'samples-filler-analyser': {
+                    target: 'chart-analyser'
+                }
+            },
+            interaction: {
+                intersect: false
+            },
+            elements: {
+                line: {
+                    // tension: 0.1,
+                    fill: 'stack'
+                }
+            }
+        }
+    }
+
+    new Chart(document.getElementById('waka'), config)
+
+}
+
+main()
