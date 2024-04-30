@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Update gist
-        uses: superman66/wakatime-sync@master
+        uses: ./
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN ***REMOVED******REMOVED***
           GIST_ID: ${{ secrets.GIST_ID***REMOVED******REMOVED***
