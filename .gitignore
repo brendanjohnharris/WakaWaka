@@ -43,19 +43,18 @@ build/config.json
 # proportion of contributors will probably not be using SublimeText
 # *.sublime-project
 
-
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+*.code-workspace
 
 ### WebStorm/IntelliJ ###
 /.idea
 modules.xml
 *.ipr
-
 
 ### System Files ###
 .DS_Store
