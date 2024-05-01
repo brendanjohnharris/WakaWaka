@@ -9,10 +9,10 @@
 
 ### Prep work
 
-1. Create a new public GitHub Gist (https://gist.github.com/)
-1. Create a token with the `gist` scope and copy it. (https://github.com/settings/tokens/new)
-1. Create a WakaTime account (https://wakatime.com/signup)
-1. In your account settings, copy the existing WakaTime API Key (https://wakatime.com/settings/account)
+1. Create a new public GitHub Gist (<https://gist.github.com/>)
+1. Create a token with the `gist` scope and copy it. (<https://github.com/settings/tokens/new>)
+1. Create a WakaTime account (<https://wakatime.com/signup>)
+1. In your account settings, copy the existing WakaTime API Key (<https://wakatime.com/settings/account>)
 
 ### Project setup
 
@@ -26,12 +26,12 @@
 
 ### Push Daily Report to Wechat
 
-if you are using Wechat, you can use **ServerChan(http://sc.ftqq.com/)** to push wakatime daily report to your Wechat.
+if you are using Wechat, you can use **ServerChan(<http://sc.ftqq.com/>)** to push wakatime daily report to your Wechat.
 
 #### Settting
 
-1. Create a ServerChan account (https://sct.ftqq.com/)
-2. Copy SCKEY (https://sct.ftqq.com/sendkey)
+1. Create a ServerChan account (<https://sct.ftqq.com/>)
+2. Copy SCKEY (<https://sct.ftqq.com/sendkey>)
 3. Bind your micromessage in ServerChan
 4. Add SCKEY to repo **Secrets**: **SCU_KEY**
 
@@ -54,10 +54,29 @@ If you are interest in it, take a issue or PR.
 
 ## How can I use this data
 
-You can use this data in Wakatime Dashboard(http://wakatime.chenhuichao.com).
+You can use this data in Wakatime Dashboard(<http://wakatime.chenhuichao.com>).
 
 You input the Gist ID, then you can see the report.
 
 <p align="center">
   <img src="./screenshot/wakatime-dashboard.jpg">
 </p>
+
+---
+
+## HTML chart
+
+The `chart` branch also provides a simple HTML chart that displays data from the associated gist.
+To use this chart, `checkout` the `chart` branch and edit the first two lines of the `dataloader.js` file to include your gist ID and github username.
+Then, you can activate the github pages using the `chart` as the source to publish a live version of the chart:
+<p align="center">
+  <img src="./screenshot/chart-example.png">
+</p>
+
+This chart, available at `https://<github username>.github.io/WakaWaka/`, can be embedded into obsidian markdown as:
+
+```markdown
+<iframe src="https://brendanjohnharris.github.io/WakaWaka/index.html?start=29-04-2024&end=05-05-2024" width="100%" height="600px"></iframe>
+```
+
+Notice that the URL parameters, `?start=29-04-2024&end=05-05-2024`, can be used to specify the date range of the chart in the format `dd-mm-yyyy`.
