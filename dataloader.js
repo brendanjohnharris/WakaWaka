@@ -5,10 +5,11 @@ const GIST_ID = '154db66816e5fc616b1ff180a01c3dd2'
 const category = 'projects'
 const variable = 'total_seconds'
 const default_start_date = dayjs().subtract(14, 'day')
-const default_end_date = dayjs().subtract(0, 'day')
+const default_end_date = dayjs().subtract(1, 'day')
 const min_seconds = 1200
 const min_percent = 1
 
+dayjs.extend(window.dayjs_plugin_customParseFormat);
 dayjs.extend(window.dayjs_plugin_duration);
 
 async function dateRange(start, end) {
@@ -17,8 +18,21 @@ async function dateRange(start, end) {
     return await Array.from({ length: end.diff(start, 'day') + 1 }, (_, i) => start.add(i, 'day'))
 }
 
+async function retrieveDateRange() {
+    let params = new URLSearchParams(window.location.search);
+    let start = await dayjs(params.get('start'), ['DD-MM-YYYY', 'D-M-YYYY'])
+    let end = await dayjs(params.get('end'), ['DD-MM-YYYY', 'D-M-YYYY'])
+    if (!start.isValid()) {
+        start = default_start_date
+    }
+    if (!end.isValid()) {
+        end = default_end_date
+    }
+    return await dateRange(start, end)
+}
+
 async function formatURL(date) {
-    date = await date.toISOString().slice(0, 10)
+    date = await date.add(10, 'hour').toISOString().slice(0, 10) // dd a bit to get the dates to align
     return await `https://gist.githubusercontent.com/${GH_USER}/${GIST_ID}/raw/summaries_${date}.json`
 }
 

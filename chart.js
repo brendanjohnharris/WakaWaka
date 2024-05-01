@@ -4,7 +4,7 @@ let propagate = false
 
 async function main() {
 
-    dates = await dateRange(default_start_date, default_end_date)
+    dates = await retrieveDateRange()
     data = await formatDaysData(dates)
     plotdata = await formatPlotData(data)
 
