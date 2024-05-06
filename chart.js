@@ -11,10 +11,11 @@ async function main() {
 
 
     const config = {
-        type: 'line',
+        type: 'bar',
         data: plotdata,
         options: {
-            stepped: 'middle',
+            categoryPercentage: 1,
+            barPercentage: 1,
             scales: {
                 x: {
                     type: 'time',
@@ -25,7 +26,8 @@ async function main() {
                         displayFormats: {
                             day: 'E dd/MM/yyyy'
                         }
-                    }
+                    },
+                    stacked: true,
                 },
                 y: {
                     ticks: {
@@ -55,6 +57,9 @@ async function main() {
                 },
                 'samples-filler-analyser': {
                     target: 'chart-analyser'
+                },
+                legend: {
+                    display: true,
                 }
             },
             interaction: {
@@ -62,8 +67,14 @@ async function main() {
             },
             elements: {
                 line: {
-                    tension: 0.1,
-                    fill: 'stack'
+                    stepped: 'middle',
+                    // tension: 0.1,
+                    fill: 'origin'
+                },
+                bar: {
+                    borderWidth: 0,
+                    borderSkipped: false,
+                    hoverBorderWidth: 3,
                 }
             }
         }

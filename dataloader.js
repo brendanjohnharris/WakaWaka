@@ -86,7 +86,7 @@ async function formatDaysData(dates) {
 function getValue(data, date, label) {
     out = data.find(item => item[0].isSame(date, 'day') && item[1] === label)
     if (out === undefined) {
-        return 0
+        return null
     }
     return out[2]
 }
@@ -103,14 +103,14 @@ async function _formatPlotData(data) {
     finalxs = finalxs.map(date => date.format('YYYY-MM-DD'))
     finalys = unilabels.map(label => finalxs.map(date => getValue(data, date, label)))
     ////finalxs = unilabels.map(label => finalxs)
-    //sumorder = finalys.map(x => x.reduce((a, b) => a + b, 0))
+    sumorder = finalys.map(x => x.reduce((a, b) => a + b, 0)) // Total time
 
-    //indices = Array.from({ length: sumorder.length }, (v, i) => i)
-    //indices.sort((a, b) => sumorder[b] - sumorder[a])
+    indices = Array.from({ length: sumorder.length }, (v, i) => i)
+    indices.sort((a, b) => sumorder[b] - sumorder[a])
 
-    //unilabels = indices.map(i => unilabels[i])
-    //finalys = indices.map(i => finalys[i])
-    //finalxs = indices.map(i => finalxs[i])
+    unilabels = indices.map(i => `${unilabels[i]} (${formatSeconds(sumorder[i])})`)
+    finalys = indices.map(i => finalys[i])
+    // finalxs = indices.map(i => finalxs[i])
     console.log(unilabels)
     console.log(finalxs)
     console.log(finalys)
