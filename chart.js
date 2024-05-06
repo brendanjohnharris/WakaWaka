@@ -14,6 +14,7 @@ async function main() {
         type: 'line',
         data: plotdata,
         options: {
+            stepped: 'middle',
             scales: {
                 x: {
                     type: 'time',
@@ -61,7 +62,7 @@ async function main() {
             },
             elements: {
                 line: {
-                    // tension: 0.1,
+                    tension: 0.1,
                     fill: 'stack'
                 }
             }
