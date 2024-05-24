@@ -134,6 +134,6 @@ async function formatPlotData(data) {
 
 function formatSeconds(val, index) {
     console.log(val)
-    return dayjs.duration(val, 'seconds').format('H[h] m[m]');
+    return dayjs.duration(val, 'seconds').format('D[d] H[h] m[m]');
 }
 
