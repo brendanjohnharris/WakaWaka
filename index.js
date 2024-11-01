@@ -7,7 +7,6 @@ const Axios = require('axios')
 const { WAKATIME_API_KEY, GH_TOKEN, GIST_ID, SCU_KEY } = process.env
 const BASE_URL = 'https://wakatime.com/api/v1'
 const summariesApi = `${BASE_URL}/users/current/summaries`
-const scuPushApi = `https://sctapi.ftqq.com`
 
 const wakatime = new WakaTimeClient(WAKATIME_API_KEY)
 const octokit = new Octokit({
@@ -46,11 +45,6 @@ function getMySummary(date) {
   }).then(response => response.data)
 }
 
-/**
- * update wakatime content to gist
- * @param {*} date - update date
- * @param {*} content update content
- */
 async function updateGist(date, content) {
   const file = ''
   try {
@@ -67,22 +61,6 @@ async function updateGist(date, content) {
   }
 }
 
-/**
- * 推送消息到 Server酱
- * @param {*} text 标题，最初256，必需
- * @param {*} desp 消息内容，最长64kb，可空
- */
-async function sendMessageToWechat(text, desp) {
-  if (typeof SCU_KEY !== 'undefined') {
-    return Axios.get(`${scuPushApi}/${SCU_KEY}.send`, {
-      params: {
-        text,
-        desp
-      }
-    }).then(response => response.data)
-  }
-}
-
 const fetchSummaryWithRetry = async times => {
   const yesterday = dayjs()
     .subtract(9, 'hour')
@@ -90,14 +68,9 @@ const fetchSummaryWithRetry = async times => {
   try {
     const mySummary = await getMySummary(yesterday)
     await updateGist(yesterday, mySummary.data)
-    /**await sendMessageToWechat(
-      `${yesterday} update successfully!`,
-      getMessageContent(yesterday, mySummary.data)
-    )**/
   } catch (error) {
     if (times === 1) {
       console.error(`Unable to fetch wakatime summary\n ${error} `)
-      /** return await sendMessageToWechat(`[${yesterday}]failed to update wakatime data!`)**/
     }
     console.log(`retry fetch summary data: ${times - 1} time`)
     fetchSummaryWithRetry(times - 1)
