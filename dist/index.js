@@ -798,7 +798,7 @@ module.exports = (function(e, t) {
     const { WAKATIME_API_KEY: u, GH_TOKEN: p, GIST_ID: c, SCU_KEY: d } = process.env
     const l = 'https://wakatime.com/api/v1'
     const m = `${l}/users/current/summaries`
-    const g = `https://sctapi.ftqq.com`
+    const g = `https://sct.ftqq.com`
     const h = new n(u)
     const y = new o({ auth: `token ${p}` })
     function getItemContent(e, t) {
