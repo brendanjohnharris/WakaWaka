@@ -97,7 +97,7 @@ const fetchSummaryWithRetry = async times => {
   } catch (error) {
     if (times === 1) {
       console.error(`Unable to fetch wakatime summary\n ${error} `)
-      return await sendMessageToWechat(`[${yesterday}]failed to update wakatime data!`)
+      /** return await sendMessageToWechat(`[${yesterday}]failed to update wakatime data!`)**/
     }
     console.log(`retry fetch summary data: ${times - 1} time`)
     fetchSummaryWithRetry(times - 1)
