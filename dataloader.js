@@ -32,8 +32,8 @@ async function retrieveDateRange() {
 }
 
 async function formatURL(date) {
-    date = await date.add(10, 'hour').toISOString().slice(0, 10) // dd a bit to get the dates to align
-    return await `https://gist.githubusercontent.com/${GH_USER}/${GIST_ID}/raw/summaries_${date}.json`
+    const dateStr = date.format('YYYY-MM-DD')
+    return `https://gist.githubusercontent.com/${GH_USER}/${GIST_ID}/raw/summaries_${dateStr}.json`
 }
 
 async function getFileContents(date) {
