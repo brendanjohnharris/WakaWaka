@@ -3,6 +3,10 @@ const { WakaTimeClient, RANGE } = require('wakatime-client')
 const dayjs = require('dayjs')
 const { Octokit } = require('@octokit/rest')
 const Axios = require('axios')
+const utc = require('dayjs/plugin/utc')
+const timezone = require('dayjs/plugin/timezone')
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 const { WAKATIME_API_KEY, GH_TOKEN, GIST_ID, SCU_KEY } = process.env
 const BASE_URL = 'https://wakatime.com/api/v1'
@@ -63,7 +67,8 @@ async function updateGist(date, content) {
 
 const fetchSummaryWithRetry = async times => {
   const yesterday = dayjs()
-    .subtract(9, 'hour')
+    .tz('Australia/Sydney')
+    .subtract(1, 'day')
     .format('YYYY-MM-DD')
   try {
     const mySummary = await getMySummary(yesterday)
